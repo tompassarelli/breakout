@@ -5,13 +5,14 @@ var aDestroy = new Audio('destroy.wav');
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
-var CANVAS_WIDTH = canvas.width = 480
-var CANVAS_HEIGHT = canvas.height = 320
+
+var CANVAS_WIDTH = canvas.width = window.innerWidth
+var CANVAS_HEIGHT = canvas.height = window.innerHeight 
 
 pause = false;
 
-const ballBaseDx = 2
-const ballBaseDy = 3
+const ballBaseDx = 3
+const ballBaseDy = 5
 var ballX = CANVAS_WIDTH / 2;
 var ballY = CANVAS_HEIGHT - 50;
 var ballR = 10;
@@ -50,8 +51,8 @@ var leftPressed = false
 let brickCount = 0;
 var brickRowCount = 3;
 var brickColumnCount = 5;
-var brickWidth = 75;
-var brickHeight = 20;
+var brickWidth = window.innerWidth*.185;
+var brickHeight = window.innerHeight*.10;
 var brickPadding = 10;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
@@ -140,7 +141,7 @@ function handleCollision() {
 	for (let c=0; c < bricks.length; c++)	 {
 		for (let r=0; r < bricks[c].length; r++) {
 			let brickArea = bricks[c][r].x + brickWidth
-			if (ballY-ballR <= bricks[c][r].y) {
+			if (ballY-ballR <= bricks[c][r].y+brickHeight) {
 				if (ballX <= brickArea && ballX > bricks[c][r].x) {
 					handleSpeedIncrease(bricks[c][r])
 					bricks[c].splice(r, 1)
