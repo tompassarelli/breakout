@@ -214,9 +214,9 @@ function process_touch(e) {
 if(e.type == 'touchstart' || e.type == 'touchmove' || e.type == 'touchend' || e.type == 'touchcancel'){
     var evt = (typeof e.originalEvent === 'undefined') ? e : e.originalEvent;
     var touch = evt.touches[0] || evt.changedTouches[0];
-    playerX = parseInt(touch.pageX) - CANVAS_WIDTH;
+    playerX = parseInt(touch.pageX)
 } else if (e.type == 'mousedown' || e.type == 'mouseup' || e.type == 'mousemove' || e.type == 'mouseover'|| e.type=='mouseout' || e.type=='mouseenter' || e.type=='mouseleave') {
-    playerX = parseInt(e.clientX) - CANVAS_WIDTH
+    playerX = parseInt(e.clientX)
 	}
 }
 
