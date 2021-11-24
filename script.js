@@ -18,6 +18,27 @@ var ballR = 10;
 var ballDx = ballBaseDx
 var ballDy = -ballBaseDy;
 
+function handleSpeedIncrease(brick) {
+		ballDy = (~ballDy +1)
+		switch (brick.level) {
+			case (2):
+					if (ballDy <= ballBaseDy) { 
+						ballDy*=1.2
+					}
+				break;
+			case (1):
+					if (ballDy <= ballBaseDy*1.2) { 
+						ballDy*=1.4
+					}
+				break;
+			case (0):
+					if (ballDy <= ballBaseDy*1.4) { 
+						ballDy*=1.7
+					}
+				break;
+			default:
+		}
+}
 
 var playerX = CANVAS_WIDTH / 2 - 40;
 var playerY = CANVAS_HEIGHT - 30;
@@ -34,7 +55,6 @@ var brickHeight = 20;
 var brickPadding = 10;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
-var rowHeight = brickHeight*brickOffsetTop
 
 var bricks = []
 var test = false;
@@ -43,13 +63,16 @@ if (test == true) {
 	brickColumnCount =1
 }
 
-for (let c = 0; c < brickColumnCount; c++) {
-	bricks[c] = [];
-	for (let r = 0; r < brickRowCount; r++) {
-		bricks[c][r] = { x: 0, y: 0, color: randomColor() };
-		brickCount ++;
+function generateBricks() {
+	for (let c = 0; c < brickColumnCount; c++) {
+		bricks[c] = [];
+		for (let r = 0; r < brickRowCount; r++) {
+			bricks[c][r] = { x: 0, y: 0, color: randomColor(), level:r};
+			brickCount ++;
+		}
 	}
 }
+generateBricks()
 
 
 function drawBricks() {
@@ -104,7 +127,6 @@ function drawBall() {
 
 
 function handleCollision() {
-
 	//player hit
 	if ((ballY + ballR >= playerY-1)
 		&& ballY + ballR <= playerY + playerH+1) {
@@ -119,9 +141,8 @@ function handleCollision() {
 		for (let r=0; r < bricks[c].length; r++) {
 			let brickArea = bricks[c][r].x + brickWidth
 			if (ballY-ballR <= bricks[c][r].y) {
-				if (ballX <= brickArea 
-				&& ballX > bricks[c][r].x) {
-					handleSpeedIncrease(brick[c][r])
+				if (ballX <= brickArea && ballX > bricks[c][r].x) {
+					handleSpeedIncrease(bricks[c][r])
 					bricks[c].splice(r, 1)
 					brickCount --;
 					aDestroy.play();
@@ -145,29 +166,6 @@ function handleCollision() {
 		document.location.reload()
 	}
 
-}
-
-function handleSpeedIncrease(brick) {
-		let bY = brick.y
-		switch (bY) {
-			case by > brickRowLevel:
-					if (Math.abs(ballDy) <= ballBaseDy) { 
-						ballDy = (~ballDy +1) * 1.2
-					}
-				break;
-			case bY < brickRowLevel*2:
-					if (Math.abs(ballDy) <= ballBaseDy*1.2) { 
-						ballDy = (~ballDy +1) *1.4
-					}
-				break;
-			case bY < brickRowLevel*3:
-					if (Math.abs(ballDy) <= ballBaseDy*1.4) { 
-						ballDy = (~ballDy +1) *1.6
-					}
-				break;
-			default:
-				break;
-		}
 }
 function handleKeys() {
 	if (rightPressed && playerX < CANVAS_WIDTH) {
