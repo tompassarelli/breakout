@@ -160,11 +160,11 @@ function handleCollision() {
 	}
 	if (ballY - ballR > CANVAS_HEIGHT) {
 		alert('Gameover \nPress OK or Enter to Restart')
-		document.location.reload()
+		window.location.href = window.location.href
 	}
 	if (brickCount == 0) {
 		alert('Gameover...You Win!')
-		document.location.reload()
+		window.location.href = window.location.href
 	}
 
 }
