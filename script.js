@@ -5,7 +5,6 @@ let aDestroy = new Audio('destroy.wav');
 let canvas = document.getElementById("myCanvas");
 let ctx = canvas.getContext("2d");
 
-
 let CANVAS_WIDTH = canvas.width = window.innerWidth
 let CANVAS_HEIGHT = canvas.height = window.innerHeight
 
@@ -13,7 +12,7 @@ let pause = false;
 
 let speedLevel = 0;
 const ballBaseDx = 3
-const ballBaseDy = 6
+const ballBaseDy = 5
 let ballX = CANVAS_WIDTH / 2 - 40;
 let ballY = CANVAS_HEIGHT - 50;
 let ballR = 10;
@@ -25,8 +24,8 @@ let playerSpeedModifier = false;
 let playerSpeed = 12
 
 let brickCount = 0;
-let brickRowCount = 5;
-let brickColumnCount = 10;
+let brickRowCount = 4;
+let brickColumnCount = 8;
 let brickPadding = 5;
 let brickOffsetTop = 150;
 let brickOffsetLeft = Math.max(CANVAS_WIDTH * .025, 20);
@@ -34,7 +33,7 @@ let brickWidth = (CANVAS_WIDTH - (2 * brickOffsetLeft) - (brickPadding * brickCo
 let brickHeight = CANVAS_HEIGHT * .05;
 let bricks = []
 
-let playerWidth = CANVAS_WIDTH * .06 + 40;
+let playerWidth = Math.max(CANVAS_WIDTH * .10, 80)
 let playerHeight = CANVAS_HEIGHT * .0225;
 let playerX = CANVAS_WIDTH / 2;
 let playerY = CANVAS_HEIGHT - playerHeight * 2;
@@ -153,15 +152,16 @@ function handleBallAngleAdjustment(x, type) {
 	}
 	switch (true) {
 		case (spot < 0.20):
+			ballDx = (ballBaseDx + (ballBaseDx * speedLevel))
 			if (ballDx > 0) {
 				ballDx = ~ballDx + 1
 			}
-			ballDx = (ballBaseDx + (ballBaseDx * speedLevel))
+			break;
 		case (spot > 0.80):
+			ballDx = (ballBaseDx + (ballBaseDx * speedLevel));
 			if (ballDx < 0) {
 				ballDx = ~ballDx + 1
 			}
-			ballDx = (ballBaseDx + (ballBaseDx * speedLevel));
 			break;
 		default:
 			break;
