@@ -21,11 +21,11 @@ let ballDy = -ballBaseDy;
 
 const playerSpeedModifierVal = .5;
 let playerSpeedModifier = false;
-let playerSpeed = 12
+let playerSpeed = 10
 
 let brickCount = 0;
 let brickRowCount = 4;
-let brickColumnCount = 8;
+let brickColumnCount = 10;
 let brickPadding = 5;
 let brickOffsetTop = 150;
 let brickOffsetLeft = Math.max(CANVAS_WIDTH * .025, 20);
