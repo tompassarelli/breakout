@@ -4,17 +4,21 @@ let aDestroy = new Audio('destroy.wav');
 
 let canvas = document.getElementById("myCanvas");
 let ctx = canvas.getContext("2d");
+let scorehtml = document.querySelector('.score');
 
 let CANVAS_WIDTH = canvas.width = window.innerWidth
 let CANVAS_HEIGHT = canvas.height = window.innerHeight
 
+let score = 0
 let pause = false;
 
 let speedLevel = 0;
 const ballBaseDx = 3
 const ballBaseDy = 4.5
-let ballX = CANVAS_WIDTH / 2 - 40;
-let ballY = CANVAS_HEIGHT - 50;
+let ballBaseX = CANVAS_WIDTH / 2 - 80;
+let ballBaseY = CANVAS_HEIGHT - 200;
+let ballX = ballBaseX;
+let ballY = ballBaseY; 
 let ballR = 10;
 let ballDx = ballBaseDx
 let ballDy = -ballBaseDy;
@@ -33,10 +37,12 @@ let brickWidth = (CANVAS_WIDTH - (2 * brickOffsetLeft) - (brickPadding * brickCo
 let brickHeight = CANVAS_HEIGHT * .05;
 let bricks = []
 
-let playerWidth = Math.max(CANVAS_WIDTH * .10, 80)
+let playerWidth = Math.max(CANVAS_WIDTH * .12, 80)
 let playerHeight = CANVAS_HEIGHT * .0225;
-let playerX = CANVAS_WIDTH / 2;
-let playerY = CANVAS_HEIGHT - playerHeight * 2;
+let playerBaseX = CANVAS_WIDTH / 2;
+let playerBaseY = CANVAS_HEIGHT - playerHeight * 2;
+let playerX = playerBaseX
+let playerY = playerBaseY
 let rightPressed = false
 let leftPressed = false
 
@@ -50,6 +56,7 @@ if (test == true) {
 }
 
 function generateBricks() {
+	brickCount == 0;
 	for (let c = 0; c < brickColumnCount; c++) {
 		bricks[c] = [];
 		for (let r = 0; r < brickRowCount; r++) {
@@ -73,10 +80,33 @@ function draw() {
 	drawBricks()
 	drawPlayer()
 	drawBall()
+	updateScore()
 }
 
 aStart.play()
 let intervalID = setInterval(draw, 10);
+
+function reset() {
+	 bricks.length = 0;
+	 score = 0;
+	 generateBricks();
+	 ballDy = ballBaseDy;
+	 ballDx = ballBaseDy;
+	 ballX = ballBaseX
+	 ballY = ballBaseY
+	 playerX = playerBaseX
+	 playerY = playerBaseY
+}
+
+// function countDown() {
+// 	ctx.font = '36px Helvetica'
+// 	ctx.fillStyle = 'white'
+// 	ctx.fillText('3')
+// }
+
+function updateScore() {
+	scorehtml.innerText = 'Score: ' + score
+}
 
 function drawBricks() {
 
@@ -90,6 +120,7 @@ function drawBricks() {
 
 	}
 }
+
 
 function handleBrickHit(brick) {
 	switch (true) {
@@ -207,8 +238,8 @@ function handleCollision() {
 					if (ballX <= brickEnd && ballX > bricks[c][r].x) {
 						handleBrickHit(bricks[c][r])
 						bricks[c].splice(r,1)
-						console.log(bricks)
 						brickCount--;
+						score++;
 						aDestroy.play();
 					}
 				}
@@ -228,12 +259,14 @@ function handleCollision() {
 		ballDy = ~ballDy + 1
 	}
 	if (ballY - ballR > CANVAS_HEIGHT) {
-		alert('Gameover \nPress OK or Enter to Restart')
-		document.location.reload()
+		// alert('Gameover \nPress OK or Enter to Restart')
+		reset()
+		// document.location.reload()
 	}
 	if (brickCount == 0) {
-		alert('Gameover...You Win!')
-		document.location.reload()
+		// alert('Gameover...You Win!')
+		reset()
+		// document.location.reload()
 	}
 }
 
