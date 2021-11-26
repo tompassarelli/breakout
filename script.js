@@ -12,7 +12,7 @@ let pause = false;
 
 let speedLevel = 0;
 const ballBaseDx = 3
-const ballBaseDy = 5
+const ballBaseDy = 4.5
 let ballX = CANVAS_WIDTH / 2 - 40;
 let ballY = CANVAS_HEIGHT - 50;
 let ballR = 10;
